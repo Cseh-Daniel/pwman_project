@@ -1,0 +1,82 @@
+﻿<Window x:Class="PasswordManager.Windows.AddEntry"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PasswordManager.Windows"
+        mc:Ignorable="d"
+        Title="Add entry" 
+        Height="700" Width="500"
+        Icon="/Pictures/Lock.ico">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.05*" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="0.05*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.02*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.05*"/>
+            <RowDefinition Height="0.02*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+            <Image VerticalAlignment="Center" Height="50px" Width="50px" Source="/Pictures/pencil.png"/>
+            <TextBlock VerticalAlignment="Center" FontSize="30px" Padding="10px 0px 0px 0px"> 
+                Add an entry
+            </TextBlock>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Grid.Column="1" VerticalAlignment="Center">
+            <TextBlock Focusable="False" FontSize="20px" FontWeight="Bold" >Name</TextBlock>
+            <TextBox Margin="0 10px 0 0" Height="28px" Width="430px" HorizontalAlignment="Left" FontSize="20px"  BorderThickness="0 0 0 2px" BorderBrush="Black"></TextBox>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Grid.Column="1" VerticalAlignment="Center">
+            <TextBlock Focusable="False" FontSize="20px" FontWeight="Bold" >Link</TextBlock>
+            <TextBox Margin="0 10px 0 0" Height="28px" Width="430px" HorizontalAlignment="Left" FontSize="20px"  BorderThickness="0 0 0 2px" BorderBrush="Black"></TextBox>
+        </StackPanel>
+
+        <StackPanel Grid.Row="4" Grid.Column="1" VerticalAlignment="Center">
+            <TextBlock Focusable="False" FontSize="20px" FontWeight="Bold" >Username</TextBlock>
+            <TextBox Margin="0 10px 0 0" Height="28px" Width="430px" HorizontalAlignment="Left" FontSize="20px"  BorderThickness="0 0 0 2px" BorderBrush="Black"></TextBox>
+        </StackPanel>
+
+        <StackPanel Grid.Row="5" Grid.Column="1" VerticalAlignment="Center">
+            <TextBlock Focusable="False" FontSize="20px" FontWeight="Bold" >Password</TextBlock>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="0.1*" />
+                </Grid.ColumnDefinitions>
+                <PasswordBox Grid.Column="0" x:Name="pbNewEntry" Margin="0 10px 0 0" Height="28px" Width="430px" HorizontalAlignment="Left" FontSize="20px"  BorderThickness="0 0 0 2" BorderBrush="Black"></PasswordBox>
+                <TextBox     Grid.Column="0" x:Name="tbNewEntry" Visibility="Hidden" Margin="0 10px 0 0" Height="28px" Width="430px" HorizontalAlignment="Left" FontSize="20px"  BorderThickness="0 0 0 2" BorderBrush="Black"></TextBox>
+                <Button      Grid.Column="1" Height="30" Width="30" Click="aChangePass" Style="{DynamicResource RoundButtonLogin}" FontSize="22 ">👀</Button>
+            </Grid>
+        </StackPanel>
+
+        <Grid Grid.Row="6" Grid.Column="1" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" HorizontalAlignment="Left"  Width="160px" Height="50px" Background="#F6C62D" FontSize="20px" Foreground="White" Style="{DynamicResource RoundButtonLogin}" Click="aAddEntry">Add</Button>
+            <Button Grid.Column="1" HorizontalAlignment="Right" Width="160px" Height="50px" Background="#694CCB" FontSize="20px" Foreground="White" Style="{DynamicResource RoundButtonLogin}" Click="aBack">Back</Button>
+        </Grid>
+
+        <TextBlock Grid.Row="7" Grid.Column="1">
+        <Hyperlink Click="aToPage" Foreground="Black" TextDecorations="None" >
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/Pictures/GithubLogo.png"  VerticalAlignment="Center" />
+                <TextBlock VerticalAlignment="Center" >Github</TextBlock>
+            </StackPanel>
+        </Hyperlink>
+        </TextBlock>
+    </Grid>
+</Window>
