@@ -1,4 +1,5 @@
-﻿using PasswordManager.Classes;
+﻿using Newtonsoft.Json;
+using PasswordManager.Classes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -105,21 +106,30 @@ namespace PasswordManager.Windows
             }
             else
             {
-                using (FileStream fs = File.Create(tbSaveKeyFile.Text))
+                using (FileStream fs = File.Create(tbSaveKeyFile.Text)) //keyfile location
                 {
                     Generator generator = new Generator();
                     byte[] info = new UTF8Encoding(true).GetBytes(generator.generateKeyfileString());
                     fs.Write(info, 0, info.Length);
                 }
                 this.Close();
-                using (FileStream fs = File.Create(tbSaveDatabaseFile.Text))
-                {
+                
+
+                 using (StreamWriter fs = new StreamWriter(tbSaveDatabaseFile.Text)) //database location
+                 {
+                    Database db = new Database(pass, tbSaveKeyFile.Text, tbSaveDatabaseFile.Text);
+                    //db.saveDatabase();
 
                     //Itt ír a hal filébe
+                    //Debug.WriteLine(db);
+                     db.saveDatabase();
+                    //Debug.WriteLine(JsonConvert.SerializeObject(db, Formatting.Indented));
+                    // byte[] info = new UTF8Encoding(true).GetBytes( db.ToString());
+                     //fs.WriteLine(db.ToString());
+                 }
+                 this.Close();
 
 
-                }
-                this.Close();
             }
             
         }

@@ -19,5 +19,9 @@ namespace PasswordManager.Classes
             username = un;
         }
 
+        public override string? ToString()
+        {
+            return name+" | "+username+"\t"+password;
+        }
     }
 }
