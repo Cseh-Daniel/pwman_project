@@ -39,12 +39,28 @@ namespace PasswordManager.Pages
         
         }
 
-        private void aOpenFileExplorer(object sender, RoutedEventArgs e)
+        private void aOpenDatabaseFile(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
-            dlg.DefaultExt = ".png";
-            dlg.Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
+            dlg.DefaultExt = ".pdb";
+            dlg.Filter = "Password Database File (*.pdb)|*.pdb";
+
+            Nullable<bool> result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                string filename = dlg.FileName;
+                tbFileExplorer.Text = filename;
+            }
+        }
+
+        private void aOpenKeyFile(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            dlg.DefaultExt = ".KEY";
+            dlg.Filter = "Key Files (.KEY)|*.KEY";
 
             Nullable<bool> result = dlg.ShowDialog();
 

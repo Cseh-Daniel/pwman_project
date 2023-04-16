@@ -1,6 +1,8 @@
-﻿using PasswordManager.Pages;
+﻿using PasswordManager.Classes;
+using PasswordManager.Pages;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +30,9 @@ namespace PasswordManager
             mainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
             //mainFrame.Source = new Uri("Pages/Login.xaml", UriKind.RelativeOrAbsolute);
             mainFrame.NavigationService.Navigate(new Uri("/Pages/Login.xaml", UriKind.Relative));
+
+            Debug.WriteLine("hashed data:\n"+Encrypter.Hash("alma"));
+
         }
 
     }

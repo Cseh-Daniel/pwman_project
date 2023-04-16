@@ -1,6 +1,10 @@
 ﻿{
-  "user": {
+  "Users": {
     "password": "admin",
-    "keyFileString": "admin"
+    "keyFileString": "admin",
+    "data": {}
+
+    }
   }
+
 }

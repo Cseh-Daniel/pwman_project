@@ -32,7 +32,7 @@ namespace PasswordManager.Windows
             ResizeMode = ResizeMode.NoResize;
         }
 
-        private void aSaveFileExplorer(object sender, RoutedEventArgs e)
+        private void aSaveKeyFile(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
             dlg.FileName = "KeyFile";
@@ -43,7 +43,23 @@ namespace PasswordManager.Windows
 
             if (result == true)
             {
-                tbSaveFileExplorer.Text = dlg.FileName;
+                tbSaveKeyFile.Text = dlg.FileName;
+                string filename = dlg.FileName;
+            }
+        }
+
+        private void aSaveDatabaseFile(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.FileName = "DatabaseFile";
+            dlg.DefaultExt = ".pdb";
+            dlg.Filter = "Database files (.pdb)|*.pdb";
+
+            Nullable<bool> result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                tbSaveDatabaseFile.Text = dlg.FileName;
                 string filename = dlg.FileName;
             }
         }
@@ -77,18 +93,31 @@ namespace PasswordManager.Windows
                 ErrorMsg.Text = "Passwords don't match!";
                 ErrorMsg.Visibility = Visibility.Visible;
             }
-            else if (tbSaveFileExplorer.Text.Length == 0)
+            else if (tbSaveKeyFile.Text.Length == 0)
             {
                 ErrorMsg.Text = "Set a location for the key file!";
                 ErrorMsg.Visibility = Visibility.Visible;
             }
+            else if (tbSaveDatabaseFile.Text.Length == 0)
+            {
+                ErrorMsg.Text = "Set a location for the database file!";
+                ErrorMsg.Visibility = Visibility.Visible;
+            }
             else
             {
-                using (FileStream fs = File.Create(tbSaveFileExplorer.Text))
+                using (FileStream fs = File.Create(tbSaveKeyFile.Text))
                 {
                     Generator generator = new Generator();
                     byte[] info = new UTF8Encoding(true).GetBytes(generator.generateKeyfileString());
                     fs.Write(info, 0, info.Length);
+                }
+                this.Close();
+                using (FileStream fs = File.Create(tbSaveDatabaseFile.Text))
+                {
+
+                    //Itt ír a hal filébe
+
+
                 }
                 this.Close();
             }
