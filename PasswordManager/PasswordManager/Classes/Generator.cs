@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PasswordManager.Classes
 {
-    internal class Generator
+    class Generator
     {
         public String generateKeyfileString()
         {
@@ -20,7 +20,7 @@ namespace PasswordManager.Classes
             {
                 stringChars[i] = chars[random.Next(chars.Length)];
             }
-            return new String(stringChars);
+            return new string(stringChars);
         }
     }
 }

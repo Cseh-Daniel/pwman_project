@@ -22,9 +22,9 @@ namespace PasswordManager.Classes
         private static ICryptoTransform encryptor = algorithm.CreateEncryptor();
         private static ICryptoTransform decryptor = algorithm.CreateDecryptor();
         private static String vectorBase64 = "";
-        
 
-        
+
+
 
         public static String getVector()
         {
@@ -48,7 +48,7 @@ namespace PasswordManager.Classes
         }
 
 
-        private static string EncryptData(string plainText, string keyBase64, out string vectorBase64)
+        public static string EncryptData(string plainText, string keyBase64)
         {
             using (Aes aesAlgorithm = Aes.Create())
             {
@@ -122,6 +122,31 @@ namespace PasswordManager.Classes
             }
         }
 
-     
+
+        public static string keyGenerator(string passHash, string keyHash)
+        {
+
+            string result = "";
+
+            if (passHash.Length != keyHash.Length)
+            {
+                throw new Exception("The two given strings has different lengths!");
+            }
+
+            for (int i = 0; i < passHash.Length; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    result += passHash[i];
+                }
+                else
+                {
+                    result += keyHash[i];
+                }
+            }
+
+            return result;
+        }
+
     }
 }
