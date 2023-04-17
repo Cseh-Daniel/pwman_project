@@ -11,56 +11,91 @@ namespace PasswordManager.Classes
 {
     class Database
     {
-        string password, keyfile, dbLocation;
+        private string password, keyFile, dbLocation, vector, encryptedPass;
         List<passwordData> entries;
 
         public string Password { get { return password; } set { password = value; } }
-        public string Keyfile { get { return keyfile; } set { keyfile = value; } }
+        public string KeyFile { get { return keyFile; } set { keyFile = value; } }
         public string DbLocation { get { return dbLocation; } set { dbLocation = value; } }
-        public List<passwordData> Entries { get { return entries; }  set { entries = value; } }
+        List<passwordData> Entries { get { return entries; } set { entries = value; } }
+        public string Vector { get { return vector; } set { vector = value; } }
+        public string EncryptedPass { get { return encryptedPass; } set { encryptedPass = value; } }
+
 
         public Database(string password, string keyfile, string dbLocation)
         {
             entries = new List<passwordData>();
-            this.password = Encrypter.Hash(password);
-            this.keyfile = Encrypter.Hash(keyfile);
+            Password = password;
+            KeyFile = keyfile;
+
+            //--test Datas
+            /*
             Entries.Add(new passwordData("cim", "link", "username", "password"));
-            entries.Add(new passwordData("cim1", "link1", "username1", "password1"));
-            this.dbLocation = dbLocation;
+            Entries.Add(new passwordData("cim1", "link1", "username1", "password1"));
+            */
+
+            DbLocation = dbLocation;
+            Vector = "";
+            EncryptedPass = "";
 
         }
 
 
         public void saveDatabase()
         {
+            StreamWriter fs = new StreamWriter(dbLocation);
+            EncryptedPass = JsonConvert.SerializeObject(Entries, Formatting.Indented);
+            EncryptedPass = Encrypter.EncryptData(EncryptedPass, Encrypter.keyGenerator(Password, keyFile));
+            Vector = Encrypter.getVector();
+            string db = JsonConvert.SerializeObject(this, Formatting.Indented);
 
-            //StreamWriter fs = new StreamWriter(dbLocation);
-            string db = JsonConvert.SerializeObject(this);
-            Debug.WriteLine(db+"\n");
-            //fs.WriteLine(db);
-            //fs.Close();
+            //Debug.WriteLine(db+"\n");
+            fs.Write(db);
+            fs.Close();
         }
 
-
-      public override string? ToString()
+        public void loadDatabase(string location)
         {
-            /*string data = "{" + "password : " + this.password + "," +
-                                "keyFile : " + this.keyfile + "," +
-                                "entries : {";
-                                foreach (var entry in entries)
-                                {
-                                    data += "{ " + entry.name + " : {";
-                                                data += "username :" + entry.username + ",";
-                                                data += "password :" + entry.password + ",";
-                                                data += "link :" + entry.link +",";
-                                    data += "},";
-                                }
-                                data = data + "}" + 
-                          "}";
+            dbLocation = location;
+            StreamReader fs = new StreamReader(dbLocation);
+            var temp = JsonConvert.DeserializeObject<Database>(fs.ReadToEnd());
 
-            return data;*/
+            clear();
+
+            this.Password = temp.Password;
+            this.Vector = temp.Vector;
+            this.KeyFile = temp.KeyFile;
+            this.DbLocation = temp.DbLocation;
+            this.EncryptedPass = temp.EncryptedPass;
+            
+            this.EncryptedPass = Encrypter.DecryptData(EncryptedPass, Encrypter.keyGenerator(Password, keyFile), Vector);
+            Entries = JsonConvert.DeserializeObject<List<passwordData>>(EncryptedPass);
+            //Debug.WriteLine("temp:\n" + this);
+            fs.Close();
+        }
+
+        public void clear()
+        {
+            Password = "";
+            Vector = "";
+            KeyFile = "";
+            DbLocation = "";
+            EncryptedPass = "";
+            Entries.Clear();
+        }
+
+        public override string? ToString()
+        {
             //string password, keyfile, dbLocation;
-            return Password + " | " + Keyfile + " | " + DbLocation;
+
+            string allEntry = "";
+
+            foreach (var item in Entries)
+            {
+                allEntry += item + "\n";
+            }
+
+            return Password + " | " + KeyFile + " | " + DbLocation + "\n" + allEntry + "\n" + EncryptedPass;
 
         }
     }

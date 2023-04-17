@@ -83,10 +83,10 @@ namespace PasswordManager.Windows
         private void aCreateDatabase(object sender, RoutedEventArgs e)
         {
             string pass = "", passRe = "";
-            
-            if(tbLoginPass.Visibility == Visibility.Visible) pass = tbLoginPass.Text;
-            else if(pbLoginPass.Visibility == Visibility.Visible) pass = pbLoginPass.Password;
-            if(tbLoginPassRe.Visibility == Visibility.Visible) passRe = tbLoginPassRe.Text;
+
+            if (tbLoginPass.Visibility == Visibility.Visible) pass = tbLoginPass.Text;
+            else if (pbLoginPass.Visibility == Visibility.Visible) pass = pbLoginPass.Password;
+            if (tbLoginPassRe.Visibility == Visibility.Visible) passRe = tbLoginPassRe.Text;
             else if (pbLoginPassRe.Visibility == Visibility.Visible) passRe = pbLoginPassRe.Password;
 
             if (pass != passRe || pass.Length == 0 || passRe.Length == 0)
@@ -106,32 +106,24 @@ namespace PasswordManager.Windows
             }
             else
             {
-                using (FileStream fs = File.Create(tbSaveKeyFile.Text)) //keyfile location
-                {
-                    Generator generator = new Generator();
-                    byte[] info = new UTF8Encoding(true).GetBytes(generator.generateKeyfileString());
-                    fs.Write(info, 0, info.Length);
-                }
+                //FileStream fs = File.Create(tbSaveKeyFile.Text); //keyfile location
+                StreamWriter fs = new StreamWriter(tbSaveKeyFile.Text);
+
+                Generator generator = new Generator();
+                //byte[] info = new UTF8Encoding(true).GetBytes(generator.generateKeyfileString());
+                string info = generator.generateKeyfileString();
+                fs.Write(info);
+                fs.Close();
+
+
+
+                Database db = new Database(Encrypter.Hash(pass), Encrypter.Hash(tbSaveKeyFile.Text), tbSaveDatabaseFile.Text);
+                db.saveDatabase();
+
                 this.Close();
-                
-
-                 using (StreamWriter fs = new StreamWriter(tbSaveDatabaseFile.Text)) //database location
-                 {
-                    Database db = new Database(pass, tbSaveKeyFile.Text, tbSaveDatabaseFile.Text);
-                    //db.saveDatabase();
-
-                    //Itt ír a hal filébe
-                    //Debug.WriteLine(db);
-                     db.saveDatabase();
-                    //Debug.WriteLine(JsonConvert.SerializeObject(db, Formatting.Indented));
-                    // byte[] info = new UTF8Encoding(true).GetBytes( db.ToString());
-                     //fs.WriteLine(db.ToString());
-                 }
-                 this.Close();
-
 
             }
-            
+
         }
         private void aChangePass(object sender, RoutedEventArgs e)
         {
@@ -169,6 +161,6 @@ namespace PasswordManager.Windows
             }
         }
 
-        
+
     }
 }
