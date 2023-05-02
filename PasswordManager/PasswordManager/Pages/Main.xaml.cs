@@ -28,20 +28,26 @@ namespace PasswordManager.Pages
     /// </summary>
     public partial class Create : Page
     {
+        passwordData activeRow;
+        int activeId;
         public Create()
         {
             InitializeComponent();
-            for (int i = 0; i < 20; i++) 
+            for (int i = 0; i < 20; i++)
             {
-                
-                var pd = new passwordData("Reddit","www.reddit.com","Alma","Alma0110");
+
+                var pd = new passwordData("Reddit", "www.reddit.com", "Alma", "Alma0110");
                 AddGrid(pd);
             }
         }
         public void AddGrid(passwordData pd)
         {
             var b = new Border();
+
+            b.MouseLeftButtonDown += aClicked;
+
             Grid protoGrid = new Grid();
+
             b.CornerRadius = new CornerRadius(35);
             b.Background = new SolidColorBrush(Color.FromRgb(245, 245, 245));
             this.spPasswordList.Children.Add(b);
@@ -60,7 +66,7 @@ namespace PasswordManager.Pages
             username.Text = pd.username;
             link.Text = pd.link;
 
-            var fullFilePath = @"http://"+ pd.link + "/favicon.ico";
+            var fullFilePath = @"http://" + pd.link + "/favicon.ico";
             Trace.WriteLine(fullFilePath);
             BitmapImage bitmap = new BitmapImage();
             bitmap.BeginInit();
@@ -73,12 +79,12 @@ namespace PasswordManager.Pages
             protoGrid.Width = 300;
             protoGrid.Height = 70;
 
-            protoGrid.ColumnDefinitions.Add( new ColumnDefinition());
-            protoGrid.ColumnDefinitions.Add( new ColumnDefinition());
-            protoGrid.ColumnDefinitions.Add( new ColumnDefinition());
+            protoGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            protoGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            protoGrid.ColumnDefinitions.Add(new ColumnDefinition());
 
-            protoGrid.RowDefinitions.Add( new RowDefinition());
-            protoGrid.RowDefinitions.Add( new RowDefinition());
+            protoGrid.RowDefinitions.Add(new RowDefinition());
+            protoGrid.RowDefinitions.Add(new RowDefinition());
 
             Grid.SetRow(logo, 0);
             Grid.SetColumn(logo, 0);
@@ -99,7 +105,44 @@ namespace PasswordManager.Pages
             protoGrid.Children.Add(username);
             protoGrid.Children.Add(pass);
             protoGrid.Children.Add(logo);
+
+}
+
+        private void aClicked(object sender, MouseButtonEventArgs e)
+        {
+            
+
+            Border br = (Border)sender;
+            activeId = br.PersistId;
+            Debug.WriteLine(activeId);
+
+
+            Grid gr = br.Child as Grid;
+            
+            TextBlock[] data = new TextBlock[4];
+
+            if (activeId==gr.PersistId)
+            {
+                br.Background = new SolidColorBrush(Color.FromRgb(235, 168, 52));
+            }
+
+
+            for (int i = 0; i <= 3; i++)
+            {
+
+                data[i] = (TextBlock)gr.Children[i];
+                Debug.WriteLine(data[i].Text);
+
+            }
+            activeRow = new passwordData(data[0].Text, data[1].Text, data[2].Text, data[3].Text);
+
+
+
+            
+
+
         }
+
 
         private void aNewEntry(object sender, RoutedEventArgs e)
         {
@@ -122,5 +165,6 @@ namespace PasswordManager.Pages
         private void aSearch(object sender, TextChangedEventArgs e)
         {
         }
+
     }
 }
