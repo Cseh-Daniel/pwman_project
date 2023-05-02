@@ -17,14 +17,28 @@ namespace PasswordManager.Classes
         public string Password { get { return password; } set { password = value; } }
         public string KeyFile { get { return keyFile; } set { keyFile = value; } }
         public string DbLocation { get { return dbLocation; } set { dbLocation = value; } }
-        List<passwordData> Entries { get { return entries; } set { entries = value; } }
+
+        [JsonIgnore]
+        public List<passwordData> Entries { get { return entries; } set { entries = value; } }
+       
         public string Vector { get { return vector; } set { vector = value; } }
         public string EncryptedPass { get { return encryptedPass; } set { encryptedPass = value; } }
 
+        public Database()
+        {
+            Password = "";
+            Vector = "";
+            KeyFile = "";
+            DbLocation = "";
+            EncryptedPass = "";
+            Entries = new List<passwordData>();
+            //Entries.Add(new passwordData("", "", "", ""));
+
+        }
 
         public Database(string password, string keyfile, string dbLocation)
         {
-            entries = new List<passwordData>();
+            Entries = new List<passwordData>();
             Password = password;
             KeyFile = keyfile;
 
@@ -64,13 +78,16 @@ namespace PasswordManager.Classes
 
             this.Password = temp.Password;
             this.Vector = temp.Vector;
+            Encrypter.setVector(Vector);
             this.KeyFile = temp.KeyFile;
             this.DbLocation = temp.DbLocation;
             this.EncryptedPass = temp.EncryptedPass;
-            
+
+            Debug.WriteLine("\n\nEncrypted\n" + this+"\n-------------------\n");
+
             this.EncryptedPass = Encrypter.DecryptData(EncryptedPass, Encrypter.keyGenerator(Password, keyFile), Vector);
             Entries = JsonConvert.DeserializeObject<List<passwordData>>(EncryptedPass);
-            //Debug.WriteLine("temp:\n" + this);
+            Debug.WriteLine("\t\nDecrypted:\n\n" + this);
             fs.Close();
         }
 
@@ -84,18 +101,34 @@ namespace PasswordManager.Classes
             Entries.Clear();
         }
 
+        public Boolean authentication(string password, string keyLoc) {
+
+            StreamReader fs = new StreamReader(keyLoc);
+
+            string keyF= fs.ReadToEnd();
+            fs.Close();
+            if ((Encrypter.Hash(password) == Password) && (Encrypter.Hash(keyF) == KeyFile))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public override string? ToString()
         {
             //string password, keyfile, dbLocation;
 
-            string allEntry = "";
+            string allEntry = "The passwords:\n";
 
             foreach (var item in Entries)
             {
                 allEntry += item + "\n";
             }
 
-            return Password + " | " + KeyFile + " | " + DbLocation + "\n" + allEntry + "\n" + EncryptedPass;
+            return Password + " | " + KeyFile + " | " + DbLocation + " | " + Vector + "\n" + allEntry + "\n" + EncryptedPass;
 
         }
     }

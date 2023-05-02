@@ -11,7 +11,11 @@ namespace PasswordManager.Classes
     {
         public string name, password, link, username;
 
-         public passwordData(string n, string l, string un, string p) 
+        public passwordData()
+        {
+        }
+
+        public passwordData(string n, string l, string un, string p) 
         {
             name = n;
             password = p;

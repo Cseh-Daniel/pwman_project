@@ -1,4 +1,5 @@
-﻿using PasswordManager.Windows;
+﻿using PasswordManager.Classes;
+using PasswordManager.Windows;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -51,7 +52,8 @@ namespace PasswordManager.Pages
             if (result == true)
             {
                 string filename = dlg.FileName;
-                tbFileExplorer.Text = filename;
+                //tbFileExplorer.Text = filename;
+                tbDatabaseFileExplorer.Text = filename;
             }
         }
 
@@ -67,7 +69,8 @@ namespace PasswordManager.Pages
             if (result == true)
             {
                 string filename = dlg.FileName;
-                tbFileExplorer.Text = filename;
+                //tbFileExplorer.Text = filename;
+                tbKeyFileExplorer.Text = filename;
             }
         }
 
@@ -79,7 +82,18 @@ namespace PasswordManager.Pages
 
         private void aToPasswordList(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Uri("/Pages/Main.xaml", UriKind.Relative));
+            Database mainDb = new Database();
+            mainDb.loadDatabase(tbDatabaseFileExplorer.Text);
+
+            string pass = "";
+
+            if (tbLoginPass.Visibility == Visibility.Visible) pass = tbLoginPass.Text;
+            else if (pbLoginPass.Visibility == Visibility.Visible) pass = pbLoginPass.Password;
+
+            if (mainDb.authentication(pass, tbKeyFileExplorer.Text))
+            {
+                this.NavigationService.Navigate(new Uri("/Pages/Main.xaml", UriKind.Relative));
+            }
         }
 
         private void aChangePass(object sender, RoutedEventArgs e)

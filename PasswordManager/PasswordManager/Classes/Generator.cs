@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace PasswordManager.Classes
 {
-    class Generator
+    static class Generator
     {
-        public String generateKeyfileString()
+        public static String generateKeyfileString()
         {
             var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             var stringChars = new char[256];

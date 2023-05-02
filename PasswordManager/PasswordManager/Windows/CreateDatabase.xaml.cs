@@ -109,16 +109,29 @@ namespace PasswordManager.Windows
                 //FileStream fs = File.Create(tbSaveKeyFile.Text); //keyfile location
                 StreamWriter fs = new StreamWriter(tbSaveKeyFile.Text);
 
-                Generator generator = new Generator();
+                //Generator generator = new Generator();
                 //byte[] info = new UTF8Encoding(true).GetBytes(generator.generateKeyfileString());
-                string info = generator.generateKeyfileString();
+                string info = Generator.generateKeyfileString();
                 fs.Write(info);
                 fs.Close();
 
-
-
-                Database db = new Database(Encrypter.Hash(pass), Encrypter.Hash(tbSaveKeyFile.Text), tbSaveDatabaseFile.Text);
+                Database db = new Database(Encrypter.Hash(pass), Encrypter.Hash(info), tbSaveDatabaseFile.Text);
+                db.Entries.Add(new passwordData("Példa bejegyzés", "link", "username", "password"));
+                
+                /*
+                db.Entries.Add(new passwordData("cim1", "link1", "username1", "password1"));
+                
+                Debug.WriteLine(db);
+                */
                 db.saveDatabase();
+                db = null;
+                db = new Database();
+
+                Debug.WriteLine("Cleared db\n"+db);
+                /*
+                db.loadDatabase(tbSaveDatabaseFile.Text);
+                Debug.WriteLine(" db\n" + db);
+                */
 
                 this.Close();
 
