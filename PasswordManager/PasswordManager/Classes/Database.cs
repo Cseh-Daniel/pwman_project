@@ -80,6 +80,7 @@ namespace PasswordManager.Classes
         {
             Debug.WriteLine("\n\nLoad DB eleje\n\n");
             dbLocation = location;
+            if (dbLocation.Length == 0) return;
             StreamReader fs = new StreamReader(dbLocation);
             var temp = JsonConvert.DeserializeObject<Database>(fs.ReadToEnd());
 
@@ -114,6 +115,7 @@ namespace PasswordManager.Classes
         public Boolean authentication(string password, string keyLoc)
         {
             Debug.WriteLine("\n\nAuth eleje\n\n");
+            if (keyLoc.Length == 0 || password.Length == 0) return false;
             StreamReader fs = new StreamReader(keyLoc);
 
             string keyF = fs.ReadToEnd();

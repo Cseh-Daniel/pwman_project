@@ -26,11 +26,14 @@
             <RowDefinition Height="0.02*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-            <Image VerticalAlignment="Center" Height="50px" Width="50px" Source="/Pictures/pencil.png"/>
-            <TextBlock VerticalAlignment="Center" FontSize="30px" Padding="10px 0px 0px 0px"> 
-                Edit an entry
-            </TextBlock>
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" >
+            <StackPanel Orientation="Horizontal">
+                <Image VerticalAlignment="Center" Height="50px" Width="50px" Source="/Pictures/pencil.png"/>
+                <TextBlock VerticalAlignment="Center" FontSize="30px" Padding="10px 0px 0px 0px"> 
+                        Edit an entry
+                </TextBlock>
+            </StackPanel>
+            <TextBlock x:Name="tbErrorMessage" VerticalAlignment="Center" Foreground="Red" FontSize="20px" Visibility="Hidden"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="1" VerticalAlignment="Center">
@@ -66,7 +69,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" HorizontalAlignment="Left"  Width="160px" Height="50px" Background="#F6C62D" FontSize="20px" Foreground="White" Style="{DynamicResource RoundButtonLogin}" Click="aEditEntry">Add</Button>
+            <Button Grid.Column="0" HorizontalAlignment="Left"  Width="160px" Height="50px" Background="#F6C62D" FontSize="20px" Foreground="White" Style="{DynamicResource RoundButtonLogin}" Click="aEditEntry">Edit</Button>
             <Button Grid.Column="1" HorizontalAlignment="Right" Width="160px" Height="50px" Background="#694CCB" FontSize="20px" Foreground="White" Style="{DynamicResource RoundButtonLogin}" Click="aBack">Back</Button>
         </Grid>
 

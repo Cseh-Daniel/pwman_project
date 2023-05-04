@@ -64,14 +64,45 @@ namespace PasswordManager.Windows
 
         private void aAddEntry(object sender, RoutedEventArgs e)
         {
-
             string pass = "";
 
             if (tbNewPass.Visibility == Visibility.Visible) pass = tbNewPass.Text;
             else if (pbNewPass.Visibility == Visibility.Visible) pass = pbNewPass.Password;
+
+            if (tbNewName.Text.Length == 0)
+            {
+                tbErrorMessage.Visibility = Visibility.Visible;
+                tbErrorMessage.Text = "The name field can't be empty!";
+                return;
+            }
+            else if (tbNewLink.Text.Length == 0)
+            {
+                tbErrorMessage.Visibility = Visibility.Visible;
+                tbErrorMessage.Text = "The link field can't be empty!";
+                return;
+            }
+            else if (!tbNewLink.Text.Contains("http://") && !tbNewLink.Text.Contains("https://"))
+            {
+                tbErrorMessage.Visibility = Visibility.Visible;
+                tbErrorMessage.Text = "The link field must contain http/https!";
+                return;
+            }
+            else if (tbNewUser.Text.Length == 0)
+            {
+                tbErrorMessage.Visibility = Visibility.Visible;
+                tbErrorMessage.Text = "The username field can't be empty!";
+                return;
+            }
+            else if (pass.Length == 0)
+            {
+                tbErrorMessage.Visibility = Visibility.Visible;
+                tbErrorMessage.Text = "The password field can't be empty!";
+                return;
+            }
+            if (tbNewLink.Text[tbNewLink.Text.Length -1] != '/') tbNewLink.Text += "/";
+
             GlobalDb.db.Entries.Add(new passwordData(tbNewName.Text, tbNewLink.Text, tbNewUser.Text, pass));
             GlobalDb.db.saveDatabase();
-
             mainPage.refreshList();
 
             this.Close();

@@ -26,12 +26,16 @@
             <RowDefinition Height="0.02*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-            <Image VerticalAlignment="Center" Height="50px" Width="50px" Source="/Pictures/pencil.png"/>
-            <TextBlock VerticalAlignment="Center" FontSize="30px" Padding="10px 0px 0px 0px"> 
-                Add an entry
-            </TextBlock>
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" >
+            <StackPanel  Orientation="Horizontal">
+                <Image VerticalAlignment="Center" Height="50px" Width="50px" Source="/Pictures/pencil.png"/>
+                <TextBlock VerticalAlignment="Center" FontSize="30px" Padding="10px 0px 0px 0px"> 
+                    Add an entry
+                </TextBlock>
+            </StackPanel>
+            <TextBlock x:Name="tbErrorMessage" VerticalAlignment="Center" Foreground="Red" FontSize="20px" Visibility="Hidden"/>
         </StackPanel>
+        
 
         <StackPanel Grid.Row="2" Grid.Column="1" VerticalAlignment="Center">
             <TextBlock Focusable="False" FontSize="20px" FontWeight="Bold" >Name</TextBlock>

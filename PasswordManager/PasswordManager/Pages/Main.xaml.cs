@@ -20,6 +20,7 @@ using static System.Net.Mime.MediaTypeNames;
 using System.Net.Http;
 using System.IO;
 using System.Diagnostics;
+using System.Security.Policy;
 
 namespace PasswordManager.Pages
 {
@@ -45,72 +46,94 @@ namespace PasswordManager.Pages
         public void AddGrid(passwordData pd,int id)
         {
             var b = new Border();
-
             b.MouseLeftButtonDown += aClicked;
-
-            Grid protoGrid = new Grid();
 
             b.CornerRadius = new CornerRadius(35);
             b.Background = new SolidColorBrush(Color.FromRgb(245, 245, 245));
-            this.spPasswordList.Children.Add(b);
+            spPasswordList.Children.Add(b);
             b.Margin = new Thickness(5);
             b.Padding = new Thickness(5);
-            b.Child = protoGrid;
 
-            var logo = new System.Windows.Controls.Image();
-            var name = new TextBlock();
-            var pass = new TextBlock();
-            var username = new TextBlock();
-            var link = new TextBlock();
-            var entryId= new TextBlock();
-            entryId.Visibility = Visibility.Hidden;
-            entryId.Text = id.ToString();
-            name.FontSize = 20;
-            name.Text = pd.name;
-            pass.Text = pd.password;
-            username.Text = pd.username;
-            link.Text = pd.link;
+            Grid cloneGrid = new Grid();
+            cloneGrid.Height = 55;
+            b.Child = cloneGrid;
 
-            var fullFilePath = @"http://" + pd.link + "/favicon.ico";
-            Trace.WriteLine(fullFilePath);
+            ColumnDefinition colDef1 = new ColumnDefinition();
+            colDef1.Width = new GridLength(0.15, GridUnitType.Star);
+
+            ColumnDefinition colDef2 = new ColumnDefinition();
+            colDef2.Width = new GridLength(0.55, GridUnitType.Star);
+
+            ColumnDefinition colDef3 = new ColumnDefinition();
+            colDef3.Width = new GridLength(0.3, GridUnitType.Star);
+
+            cloneGrid.ColumnDefinitions.Add(colDef1);
+            cloneGrid.ColumnDefinitions.Add(colDef2);
+            cloneGrid.ColumnDefinitions.Add(colDef3);
+
+            RowDefinition rowDef1 = new RowDefinition();
+            rowDef1.Height = new GridLength(0.6, GridUnitType.Star);
+
+            RowDefinition rowDef2 = new RowDefinition();
+            rowDef2.Height = new GridLength(0.4, GridUnitType.Star);
+
+            cloneGrid.RowDefinitions.Add(rowDef1);
+            cloneGrid.RowDefinitions.Add(rowDef2);
+
+            var fullFilePath = pd.link + "favicon.ico";
             BitmapImage bitmap = new BitmapImage();
             bitmap.BeginInit();
             bitmap.UriSource = new Uri(fullFilePath, UriKind.Absolute);
             bitmap.EndInit();
 
-            logo.Source = bitmap;
-            logo.Width = logo.Height = 50;
-            protoGrid.HorizontalAlignment = HorizontalAlignment.Center;
-            protoGrid.Width = 300;
-            protoGrid.Height = 70;
+            TextBlock nameTextBlock = new TextBlock();
+            nameTextBlock.FontSize = 20;
+            nameTextBlock.VerticalAlignment = VerticalAlignment.Center;
+            Grid.SetRow(nameTextBlock, 0);
+            Grid.SetColumn(nameTextBlock, 1);
+            nameTextBlock.Text = pd.name;
+            cloneGrid.Children.Add(nameTextBlock);
 
-            protoGrid.ColumnDefinitions.Add(new ColumnDefinition());
-            protoGrid.ColumnDefinitions.Add(new ColumnDefinition());
-            protoGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            TextBlock urlTextBlock = new TextBlock();
+            urlTextBlock.FontSize = 12;
+            urlTextBlock.Margin = new Thickness(10, 0, 0, 0);
+            urlTextBlock.Text = pd.link;
+            Grid.SetRow(urlTextBlock, 1);
+            Grid.SetColumn(urlTextBlock, 1);
+            cloneGrid.Children.Add(urlTextBlock);
 
-            protoGrid.RowDefinitions.Add(new RowDefinition());
-            protoGrid.RowDefinitions.Add(new RowDefinition());
+            TextBlock usernameTextBlock = new TextBlock();
+            usernameTextBlock.FontSize = 15;
+            usernameTextBlock.VerticalAlignment = VerticalAlignment.Center;
+            usernameTextBlock.Text = pd.username;
+            Grid.SetRow(usernameTextBlock, 0);
+            Grid.SetColumn(usernameTextBlock, 2);
+            cloneGrid.Children.Add(usernameTextBlock);
 
-            Grid.SetRow(logo, 0);
-            Grid.SetColumn(logo, 0);
-            Grid.SetRowSpan(logo, 2);
+            TextBlock passwdTextBlock = new TextBlock();
+            passwdTextBlock.Visibility = Visibility.Hidden;
+            passwdTextBlock.Text = pd.password;
+            cloneGrid.Children.Add(passwdTextBlock);
 
-            Grid.SetRow(name, 0);
-            Grid.SetColumn(name, 1);
-            Grid.SetRow(link, 1);
-            Grid.SetColumn(link, 1);
+            var entryId = new TextBlock();
+            entryId.Visibility = Visibility.Hidden;
+            entryId.Text = id.ToString();
+            cloneGrid.Children.Add(entryId);
 
-            Grid.SetRow(username, 0);
-            Grid.SetColumn(username, 2);
-            Grid.SetRow(pass, 1);
-            Grid.SetColumn(pass, 2);
+            TextBlock passwordBox = new TextBlock();
+            passwordBox.FontSize = 12;
+            passwordBox.Text = "******";
+            Grid.SetRow(passwordBox, 1);
+            Grid.SetColumn(passwordBox, 2);
+            cloneGrid.Children.Add(passwordBox);
 
-            protoGrid.Children.Add(name);
-            protoGrid.Children.Add(link);
-            protoGrid.Children.Add(username);
-            protoGrid.Children.Add(pass);
-            protoGrid.Children.Add(entryId);
-            protoGrid.Children.Add(logo);
+            var image = new System.Windows.Controls.Image();
+            Grid.SetRow(image, 0);
+            Grid.SetColumn(image, 0);
+            Grid.SetRowSpan(image, 2);
+            image.Source = bitmap;
+            image.Width = image.Height = 50;
+            cloneGrid.Children.Add(image);
 
         }
 
@@ -118,6 +141,7 @@ namespace PasswordManager.Pages
         {
 
             lastBorder.Background = new SolidColorBrush(Color.FromRgb(245, 245, 245));
+            lastBorder.Background.Opacity = 1;
 
             Border br = (Border)sender;
             lastBorder = br;
@@ -132,6 +156,7 @@ namespace PasswordManager.Pages
             /*if (activeId == gr.PersistId)
             {*/
             br.Background = new SolidColorBrush(Color.FromRgb(246, 198, 45));
+            br.Background.Opacity = 0.9;
             //}
 
             for (int i = 0; i <= 4; i++)
@@ -171,6 +196,14 @@ namespace PasswordManager.Pages
 
         private void aSearch(object sender, TextChangedEventArgs e)
         {
+            spPasswordList.Children.Clear();
+            for (int i = 0; i < GlobalDb.db.Entries.Count(); i++)
+            {
+                if (GlobalDb.db.Entries[i].name.Contains(tbSearchBar.Text) || GlobalDb.db.Entries[i].username.Contains(tbSearchBar.Text))
+                {
+                    AddGrid(GlobalDb.db.Entries[i], i);
+                }
+            }
         }
 
         private void aCopyUsername(object sender, RoutedEventArgs e)
@@ -223,6 +256,7 @@ namespace PasswordManager.Pages
             {
 
                 GlobalDb.db.Entries.Remove(GlobalDb.db.Entries[activeId]);
+                GlobalDb.db.saveDatabase();
                 refreshList();
 
             }
