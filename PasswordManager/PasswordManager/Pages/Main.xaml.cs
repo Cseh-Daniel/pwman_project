@@ -28,17 +28,25 @@ namespace PasswordManager.Pages
     /// </summary>
     public partial class Create : Page
     {
-        passwordData activeRow;
-        int activeId;
+        passwordData? activePassdata = null;
+        //int activeId;
+        Border lastBorder = new Border();
+
         public Create()
         {
             InitializeComponent();
-            for (int i = 0; i < 20; i++)
+            
+            
+            for (int i = 0; i < GlobalDb.db.Entries.Count(); i++)
             {
-
-                var pd = new passwordData("Reddit", "www.reddit.com", "Alma", "Alma0110");
-                AddGrid(pd);
+                //var pd = new passwordData($"Reddit{i}", "www.reddit.com", "Alma", "Alma0110");
+                
+                AddGrid(GlobalDb.db.Entries[i]);
+                //AddGrid(pd);
             }
+
+            Debug.WriteLine(GlobalDb.db.Entries.Count);
+
         }
         public void AddGrid(passwordData pd)
         {
@@ -106,39 +114,35 @@ namespace PasswordManager.Pages
             protoGrid.Children.Add(pass);
             protoGrid.Children.Add(logo);
 
-}
+        }
 
         private void aClicked(object sender, MouseButtonEventArgs e)
         {
-            
+
+            lastBorder.Background = new SolidColorBrush(Color.FromRgb(245, 245, 245));
 
             Border br = (Border)sender;
-            activeId = br.PersistId;
-            Debug.WriteLine(activeId);
+            lastBorder = br;
 
+            //activeId = br.PersistId;
+            //Debug.WriteLine(activeId);
 
             Grid gr = br.Child as Grid;
-            
+
             TextBlock[] data = new TextBlock[4];
 
-            if (activeId==gr.PersistId)
-            {
-                br.Background = new SolidColorBrush(Color.FromRgb(235, 168, 52));
-            }
-
+            /*if (activeId == gr.PersistId)
+            {*/
+            br.Background = new SolidColorBrush(Color.FromRgb(246, 198, 45));
+            //}
 
             for (int i = 0; i <= 3; i++)
             {
-
                 data[i] = (TextBlock)gr.Children[i];
                 Debug.WriteLine(data[i].Text);
-
             }
-            activeRow = new passwordData(data[0].Text, data[1].Text, data[2].Text, data[3].Text);
+            activePassdata = new passwordData(data[0].Text, data[1].Text, data[2].Text, data[3].Text);
 
-
-
-            
 
 
         }
@@ -166,5 +170,31 @@ namespace PasswordManager.Pages
         {
         }
 
+        private void aCopyUsername(object sender, RoutedEventArgs e)
+        {
+            if(activePassdata!=null) Clipboard.SetText(activePassdata.username);
+        }
+
+        private void aCopyPassword(object sender, RoutedEventArgs e)
+        {
+            if (activePassdata != null) Clipboard.SetText(activePassdata.password);
+        }
+
+        private void aOpenLink(object sender, RoutedEventArgs e)
+        {
+            
+
+            if (activePassdata != null)
+            {
+
+                var destinationurl = activePassdata.link;
+                var sInfo = new ProcessStartInfo(destinationurl)
+                {
+                    UseShellExecute = true,
+                };
+                Process.Start(sInfo);
+            }
+            return;
+        }
     }
 }

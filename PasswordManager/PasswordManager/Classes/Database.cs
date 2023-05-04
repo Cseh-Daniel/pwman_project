@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace PasswordManager.Classes
 {
+
     class Database
     {
         private string password, keyFile, dbLocation, vector, encryptedPass;
@@ -19,8 +20,15 @@ namespace PasswordManager.Classes
         public string DbLocation { get { return dbLocation; } set { dbLocation = value; } }
 
         [JsonIgnore]
-        public List<passwordData> Entries { get { return entries; } set { entries = value; } }
-       
+        public List<passwordData> Entries
+        {
+            get { return entries; }
+            set
+            {
+                entries = value;
+            }
+        }
+
         public string Vector { get { return vector; } set { vector = value; } }
         public string EncryptedPass { get { return encryptedPass; } set { encryptedPass = value; } }
 
@@ -70,6 +78,7 @@ namespace PasswordManager.Classes
 
         public void loadDatabase(string location)
         {
+            Debug.WriteLine("\n\nLoad DB eleje\n\n");
             dbLocation = location;
             StreamReader fs = new StreamReader(dbLocation);
             var temp = JsonConvert.DeserializeObject<Database>(fs.ReadToEnd());
@@ -83,12 +92,13 @@ namespace PasswordManager.Classes
             this.DbLocation = temp.DbLocation;
             this.EncryptedPass = temp.EncryptedPass;
 
-            Debug.WriteLine("\n\nEncrypted\n" + this+"\n-------------------\n");
+            Debug.WriteLine("\n\nEncrypted\n" + this + "\n-------------------\n");
 
             this.EncryptedPass = Encrypter.DecryptData(EncryptedPass, Encrypter.keyGenerator(Password, keyFile), Vector);
             Entries = JsonConvert.DeserializeObject<List<passwordData>>(EncryptedPass);
             Debug.WriteLine("\t\nDecrypted:\n\n" + this);
             fs.Close();
+            Debug.WriteLine("\n\nLoad DB vége\n\n");
         }
 
         public void clear()
@@ -101,12 +111,16 @@ namespace PasswordManager.Classes
             Entries.Clear();
         }
 
-        public Boolean authentication(string password, string keyLoc) {
-
+        public Boolean authentication(string password, string keyLoc)
+        {
+            Debug.WriteLine("\n\nAuth eleje\n\n");
             StreamReader fs = new StreamReader(keyLoc);
 
-            string keyF= fs.ReadToEnd();
+            string keyF = fs.ReadToEnd();
             fs.Close();
+
+
+
             if ((Encrypter.Hash(password) == Password) && (Encrypter.Hash(keyF) == KeyFile))
             {
                 return true;
@@ -132,4 +146,8 @@ namespace PasswordManager.Classes
 
         }
     }
+
+
+
+
 }

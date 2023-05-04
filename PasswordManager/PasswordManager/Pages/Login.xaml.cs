@@ -2,6 +2,7 @@
 using PasswordManager.Windows;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -82,15 +83,19 @@ namespace PasswordManager.Pages
 
         private void aToPasswordList(object sender, RoutedEventArgs e)
         {
-            Database mainDb = new Database();
-            mainDb.loadDatabase(tbDatabaseFileExplorer.Text);
+            //Database mainDb = new Database();
+            //mainDb.loadDatabase(tbDatabaseFileExplorer.Text);
+            Debug.WriteLine(tbDatabaseFileExplorer.Text);
+
+            GlobalDb.db.loadDatabase(tbDatabaseFileExplorer.Text);
 
             string pass = "";
 
             if (tbLoginPass.Visibility == Visibility.Visible) pass = tbLoginPass.Text;
             else if (pbLoginPass.Visibility == Visibility.Visible) pass = pbLoginPass.Password;
 
-            if (mainDb.authentication(pass, tbKeyFileExplorer.Text))
+            //if (mainDb.authentication(pass, tbKeyFileExplorer.Text))
+            if (GlobalDb.db.authentication(pass, tbKeyFileExplorer.Text))
             {
                 this.NavigationService.Navigate(new Uri("/Pages/Main.xaml", UriKind.Relative));
             }
