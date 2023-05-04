@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PasswordManager.Classes;
+using PasswordManager.Pages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,11 +21,24 @@ namespace PasswordManager.Windows
     /// </summary>
     public partial class EditEntry : Window
     {
+        int entryId;
+        MainPage mainPage;
+
         bool showPass = false;
-        public EditEntry()
+        public EditEntry(MainPage mainPage,int entryId )
         {
             InitializeComponent();
             ResizeMode = ResizeMode.NoResize;
+
+            this.mainPage = mainPage;
+            this.entryId = entryId;
+
+            tbEditUserName.Text = GlobalDb.db.Entries[entryId].username;
+            pbEditPass.Password = GlobalDb.db.Entries[entryId].password;
+            tbEditName.Text = GlobalDb.db.Entries[entryId].name;
+            tbEditLink.Text = GlobalDb.db.Entries[entryId].link;
+
+
         }
         private void aToPage(object sender, RoutedEventArgs e)
         {
@@ -40,16 +55,16 @@ namespace PasswordManager.Windows
             if (!showPass)
             {
                 showPass = true;
-                tbEditEntry.Text = pbEditEntry.Password;
-                tbEditEntry.Visibility = Visibility.Visible;
-                pbEditEntry.Visibility = Visibility.Hidden;
+                tbEditPass.Text = pbEditPass.Password;
+                tbEditPass.Visibility = Visibility.Visible;
+                pbEditPass.Visibility = Visibility.Hidden;
             }
             else
             {
                 showPass = false;
-                pbEditEntry.Password = tbEditEntry.Text;
-                pbEditEntry.Visibility = Visibility.Visible;
-                tbEditEntry.Visibility = Visibility.Hidden;
+                pbEditPass.Password = tbEditPass.Text;
+                pbEditPass.Visibility = Visibility.Visible;
+                tbEditPass.Visibility = Visibility.Hidden;
             }
         }
 
@@ -60,7 +75,18 @@ namespace PasswordManager.Windows
 
         private void aEditEntry(object sender, RoutedEventArgs e)
         {
-            //Implement
+            string pass = "";
+
+            if (tbEditPass.Visibility == Visibility.Visible) pass = tbEditPass.Text;
+            else if (pbEditPass.Visibility == Visibility.Visible) pass = pbEditPass.Password;
+
+            GlobalDb.db.Entries[entryId].username = tbEditUserName.Text;
+            GlobalDb.db.Entries[entryId].password = pass;
+            GlobalDb.db.Entries[entryId].name = tbEditName.Text;
+            GlobalDb.db.Entries[entryId].link = tbEditLink.Text;
+
+            mainPage.refreshList();
+            this.Close();
         }
     }
 }

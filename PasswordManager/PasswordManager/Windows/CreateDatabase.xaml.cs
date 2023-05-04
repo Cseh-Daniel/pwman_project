@@ -115,14 +115,18 @@ namespace PasswordManager.Windows
                 fs.Write(info);
                 fs.Close();
 
+                
                 Database db = new Database(Encrypter.Hash(pass), Encrypter.Hash(info), tbSaveDatabaseFile.Text);
                 db.Entries.Add(new passwordData("Példa bejegyzés", "link", "username", "password"));
                 
+                
+
                 /*
                 db.Entries.Add(new passwordData("cim1", "link1", "username1", "password1"));
                 
                 Debug.WriteLine(db);
                 */
+
                 db.saveDatabase();
                 db = null;
                 db = new Database();

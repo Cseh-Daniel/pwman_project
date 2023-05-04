@@ -26,29 +26,23 @@ namespace PasswordManager.Pages
     /// <summary>
     /// Interaction logic for Create.xaml
     /// </summary>
-    public partial class Create : Page
+    public partial class MainPage : Page
     {
         passwordData? activePassdata = null;
-        //int activeId;
+        int activeId;
         Border lastBorder = new Border();
 
-        public Create()
+        public MainPage()
         {
             InitializeComponent();
-            
-            
-            for (int i = 0; i < GlobalDb.db.Entries.Count(); i++)
-            {
-                //var pd = new passwordData($"Reddit{i}", "www.reddit.com", "Alma", "Alma0110");
-                
-                AddGrid(GlobalDb.db.Entries[i]);
-                //AddGrid(pd);
-            }
 
-            Debug.WriteLine(GlobalDb.db.Entries.Count);
+
+            refreshList();
+
+            //Debug.WriteLine(GlobalDb.db.Entries.Count);
 
         }
-        public void AddGrid(passwordData pd)
+        public void AddGrid(passwordData pd,int id)
         {
             var b = new Border();
 
@@ -68,6 +62,9 @@ namespace PasswordManager.Pages
             var pass = new TextBlock();
             var username = new TextBlock();
             var link = new TextBlock();
+            var entryId= new TextBlock();
+            entryId.Visibility = Visibility.Hidden;
+            entryId.Text = id.ToString();
             name.FontSize = 20;
             name.Text = pd.name;
             pass.Text = pd.password;
@@ -112,6 +109,7 @@ namespace PasswordManager.Pages
             protoGrid.Children.Add(link);
             protoGrid.Children.Add(username);
             protoGrid.Children.Add(pass);
+            protoGrid.Children.Add(entryId);
             protoGrid.Children.Add(logo);
 
         }
@@ -129,20 +127,21 @@ namespace PasswordManager.Pages
 
             Grid gr = br.Child as Grid;
 
-            TextBlock[] data = new TextBlock[4];
+            TextBlock[] data = new TextBlock[5];
 
             /*if (activeId == gr.PersistId)
             {*/
             br.Background = new SolidColorBrush(Color.FromRgb(246, 198, 45));
             //}
 
-            for (int i = 0; i <= 3; i++)
+            for (int i = 0; i <= 4; i++)
             {
                 data[i] = (TextBlock)gr.Children[i];
-                Debug.WriteLine(data[i].Text);
+                //Debug.WriteLine(data[i].Text);
             }
             activePassdata = new passwordData(data[0].Text, data[1].Text, data[2].Text, data[3].Text);
-
+            activeId = Int32.Parse(data[4].Text);
+            
 
 
         }
@@ -150,14 +149,18 @@ namespace PasswordManager.Pages
 
         private void aNewEntry(object sender, RoutedEventArgs e)
         {
-            AddEntry ae = new AddEntry();
+            AddEntry ae = new AddEntry(this);
             ae.Show();
         }
 
         private void aEditEntry(object sender, RoutedEventArgs e)
         {
-            EditEntry ee = new EditEntry();
-            ee.Show();
+            if (activePassdata != null)
+            {
+
+                EditEntry ee = new EditEntry(this, activeId);
+                ee.Show();
+            }
         }
 
         private void aLogout(object sender, RoutedEventArgs e)
@@ -195,6 +198,40 @@ namespace PasswordManager.Pages
                 Process.Start(sInfo);
             }
             return;
+        }
+
+        public void refreshList() {
+
+            spPasswordList.Children.Clear();
+
+            for (int i = 0; i < GlobalDb.db.Entries.Count(); i++)
+            {
+                //var pd = new passwordData($"Reddit{i}", "www.reddit.com", "Alma", "Alma0110");
+
+                AddGrid(GlobalDb.db.Entries[i],i);
+                //AddGrid(pd);
+            }
+
+
+        }
+
+        private void aDeleteEntry(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show
+                ("Do you want to close this window?","Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+
+            {
+
+                GlobalDb.db.Entries.Remove(GlobalDb.db.Entries[activeId]);
+                refreshList();
+
+            }
+            else
+            {
+                // Do not close the window
+            }
+
+
         }
     }
 }

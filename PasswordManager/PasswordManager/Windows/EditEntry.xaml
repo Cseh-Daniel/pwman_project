@@ -35,17 +35,17 @@
 
         <StackPanel Grid.Row="2" Grid.Column="1" VerticalAlignment="Center">
             <TextBlock Focusable="False" FontSize="20px" FontWeight="Bold" >Name</TextBlock>
-            <TextBox Margin="0 10px 0 0" Height="28px" Width="430px" HorizontalAlignment="Left" FontSize="20px"  BorderThickness="0 0 0 2px" BorderBrush="Black"></TextBox>
+            <TextBox x:Name="tbEditName" Margin="0 10px 0 0" Height="28px" Width="430px" HorizontalAlignment="Left" FontSize="20px"  BorderThickness="0 0 0 2px" BorderBrush="Black"></TextBox>
         </StackPanel>
 
         <StackPanel Grid.Row="3" Grid.Column="1" VerticalAlignment="Center">
             <TextBlock Focusable="False" FontSize="20px" FontWeight="Bold" >Link</TextBlock>
-            <TextBox Margin="0 10px 0 0" Height="28px" Width="430px" HorizontalAlignment="Left" FontSize="20px"  BorderThickness="0 0 0 2px" BorderBrush="Black"></TextBox>
+            <TextBox x:Name="tbEditLink" Margin="0 10px 0 0" Height="28px" Width="430px" HorizontalAlignment="Left" FontSize="20px"  BorderThickness="0 0 0 2px" BorderBrush="Black"></TextBox>
         </StackPanel>
 
         <StackPanel Grid.Row="4" Grid.Column="1" VerticalAlignment="Center">
             <TextBlock Focusable="False" FontSize="20px" FontWeight="Bold" >Username</TextBlock>
-            <TextBox Margin="0 10px 0 0" Height="28px" Width="430px" HorizontalAlignment="Left" FontSize="20px"  BorderThickness="0 0 0 2px" BorderBrush="Black"></TextBox>
+            <TextBox x:Name="tbEditUserName" Margin="0 10px 0 0" Height="28px" Width="430px" HorizontalAlignment="Left" FontSize="20px"  BorderThickness="0 0 0 2px" BorderBrush="Black"></TextBox>
         </StackPanel>
 
         <StackPanel Grid.Row="5" Grid.Column="1" VerticalAlignment="Center">
@@ -55,8 +55,8 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="0.1*" />
                 </Grid.ColumnDefinitions>
-                <PasswordBox Grid.Column="0" x:Name="pbEditEntry" Margin="0 10px 0 0" Height="28px" Width="430px" HorizontalAlignment="Left" FontSize="20px"  BorderThickness="0 0 0 2" BorderBrush="Black"></PasswordBox>
-                <TextBox     Grid.Column="0" x:Name="tbEditEntry" Visibility="Hidden" Margin="0 10px 0 0" Height="28px" Width="430px" HorizontalAlignment="Left" FontSize="20px"  BorderThickness="0 0 0 2" BorderBrush="Black"></TextBox>
+                <PasswordBox x:Name="pbEditPass" Grid.Column="0"  Margin="0 10px 0 0" Height="28px" Width="430px" HorizontalAlignment="Left" FontSize="20px"  BorderThickness="0 0 0 2" BorderBrush="Black"></PasswordBox>
+                <TextBox     x:Name="tbEditPass"  Grid.Column="0" Visibility="Hidden" Margin="0 10px 0 0" Height="28px" Width="430px" HorizontalAlignment="Left" FontSize="20px"  BorderThickness="0 0 0 2" BorderBrush="Black"></TextBox>
                 <Button      Grid.Column="1" Height="30" Width="30" Click="aChangePass" Style="{DynamicResource RoundButtonLogin}" FontSize="22 ">👀</Button>
             </Grid>
         </StackPanel>

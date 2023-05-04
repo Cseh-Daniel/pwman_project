@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PasswordManager.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using PasswordManager.Pages;
 
 namespace PasswordManager.Windows
 {
@@ -19,9 +21,11 @@ namespace PasswordManager.Windows
     /// </summary>
     public partial class AddEntry : Window
     {
+        MainPage mainPage;
         bool showPass = false;
-        public AddEntry()
+        public AddEntry(MainPage mainPage)
         {
+            this.mainPage = mainPage;
             InitializeComponent();
             ResizeMode = ResizeMode.NoResize;
         }
@@ -40,16 +44,16 @@ namespace PasswordManager.Windows
             if (!showPass)
             {
                 showPass = true;
-                tbNewEntry.Text = pbNewEntry.Password;
-                tbNewEntry.Visibility = Visibility.Visible;
-                pbNewEntry.Visibility = Visibility.Hidden;
+                tbNewPass.Text = pbNewPass.Password;
+                tbNewPass.Visibility = Visibility.Visible;
+                pbNewPass.Visibility = Visibility.Hidden;
             }
             else
             {
                 showPass = false;
-                pbNewEntry.Password = tbNewEntry.Text;
-                pbNewEntry.Visibility = Visibility.Visible;
-                tbNewEntry.Visibility = Visibility.Hidden;
+                pbNewPass.Password = tbNewPass.Text;
+                pbNewPass.Visibility = Visibility.Visible;
+                tbNewPass.Visibility = Visibility.Hidden;
             }
         }
 
@@ -60,7 +64,18 @@ namespace PasswordManager.Windows
 
         private void aAddEntry(object sender, RoutedEventArgs e)
         {
-            //Implement
+
+            string pass = "";
+
+            if (tbNewPass.Visibility == Visibility.Visible) pass = tbNewPass.Text;
+            else if (pbNewPass.Visibility == Visibility.Visible) pass = pbNewPass.Password;
+            GlobalDb.db.Entries.Add(new passwordData(tbNewName.Text, tbNewLink.Text, tbNewUser.Text, pass));
+            GlobalDb.db.saveDatabase();
+
+            mainPage.refreshList();
+
+            this.Close();
+
         }
     }
 }
