@@ -117,7 +117,7 @@ namespace PasswordManager.Windows
 
                 
                 Database db = new Database(Encrypter.Hash(pass), Encrypter.Hash(info), tbSaveDatabaseFile.Text);
-                db.Entries.Add(new passwordData("Példa bejegyzés", "link", "username", "password"));
+                db.Entries.Add(new passwordData("Példa bejegyzés", "https://www.google.com/", "username", "password"));
                 
                 
 
