@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "doLPmTNxrWNCutPlO2VWP8+NGHVL/i00QXs2TNZVIZJViziMONiuCEp8mvjY6Kcrsz5sQdfj3lfY2vSJFfhMGw==",
+  "dgSpecHash": "XLjyQvhQ9N8CVl24AKyWAMm/x2pfqnhy+KNBsn5Nt+dIL1YVNe4CaTq2+shZsvYeP4QuuSRKWAQYU+rb+y4udA==",
   "success": true,
-  "projectFilePath": "C:\\.GITHUB\\pwman_project\\PasswordManager\\PasswordManager\\PasswordManager.csproj",
+  "projectFilePath": "E:\\Repo\\pwman_project\\PasswordManager\\PasswordManager\\PasswordManager.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Dani_main\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+    "C:\\Users\\pogan\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
   ],
   "logs": []
 }

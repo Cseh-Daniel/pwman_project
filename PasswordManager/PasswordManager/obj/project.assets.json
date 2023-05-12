@@ -55,19 +55,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Dani_main\\.nuget\\packages\\": {}
+    "C:\\Users\\pogan\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\.GITHUB\\pwman_project\\PasswordManager\\PasswordManager\\PasswordManager.csproj",
+      "projectUniqueName": "E:\\Repo\\pwman_project\\PasswordManager\\PasswordManager\\PasswordManager.csproj",
       "projectName": "PasswordManager",
-      "projectPath": "C:\\.GITHUB\\pwman_project\\PasswordManager\\PasswordManager\\PasswordManager.csproj",
-      "packagesPath": "C:\\Users\\Dani_main\\.nuget\\packages\\",
-      "outputPath": "C:\\.GITHUB\\pwman_project\\PasswordManager\\PasswordManager\\obj\\",
+      "projectPath": "E:\\Repo\\pwman_project\\PasswordManager\\PasswordManager\\PasswordManager.csproj",
+      "packagesPath": "C:\\Users\\pogan\\.nuget\\packages\\",
+      "outputPath": "E:\\Repo\\pwman_project\\PasswordManager\\PasswordManager\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Dani_main\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\pogan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

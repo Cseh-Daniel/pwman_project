@@ -23,15 +23,14 @@ namespace PasswordManager
     /// </summary>
     public partial class MainWindow : Window
     {
+        public Frame MainFrame { get; }  
         public MainWindow()
         {
             InitializeComponent();
             ResizeMode = ResizeMode.NoResize;
-            mainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
-            //mainFrame.Source = new Uri("Pages/Login.xaml", UriKind.RelativeOrAbsolute);
-            mainFrame.NavigationService.Navigate(new Uri("/Pages/Login.xaml", UriKind.Relative));
-
-            Debug.WriteLine("hashed data:\n"+Encrypter.Hash("alma"));
+            MainFrame = mainFrame;
+            MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
+            MainFrame.NavigationService.Navigate(new Uri("/Pages/Login.xaml", UriKind.Relative));
 
         }
 
