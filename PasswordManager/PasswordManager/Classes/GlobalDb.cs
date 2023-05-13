@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PasswordManager.Classes
 {
-    static class GlobalDb
+    public static class GlobalDb
     {
 
         static public Database db;

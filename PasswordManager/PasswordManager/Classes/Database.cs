@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace PasswordManager.Classes
 {
 
-    class Database
+    public class Database
     {
         private string password, keyFile, dbLocation, vector, encryptedPass;
         List<passwordData> entries;
@@ -40,7 +40,6 @@ namespace PasswordManager.Classes
             DbLocation = "";
             EncryptedPass = "";
             Entries = new List<passwordData>();
-            //Entries.Add(new passwordData("", "", "", ""));
 
         }
 
@@ -50,19 +49,11 @@ namespace PasswordManager.Classes
             Password = password;
             KeyFile = keyfile;
 
-            //--test Datas
-            /*
-            Entries.Add(new passwordData("cim", "link", "username", "password"));
-            Entries.Add(new passwordData("cim1", "link1", "username1", "password1"));
-            */
-
             DbLocation = dbLocation;
             Vector = "";
             EncryptedPass = "";
 
         }
-
-
         public void saveDatabase()
         {
             StreamWriter fs = new StreamWriter(dbLocation);
@@ -71,7 +62,6 @@ namespace PasswordManager.Classes
             Vector = Encrypter.getVector();
             string db = JsonConvert.SerializeObject(this, Formatting.Indented);
 
-            //Debug.WriteLine(db+"\n");
             fs.Write(db);
             fs.Close();
         }
@@ -120,9 +110,6 @@ namespace PasswordManager.Classes
 
             string keyF = fs.ReadToEnd();
             fs.Close();
-
-
-
             if ((Encrypter.Hash(password) == Password) && (Encrypter.Hash(keyF) == KeyFile))
             {
                 return true;
@@ -135,8 +122,6 @@ namespace PasswordManager.Classes
 
         public override string? ToString()
         {
-            //string password, keyfile, dbLocation;
-
             string allEntry = "The passwords:\n";
 
             foreach (var item in Entries)
@@ -148,8 +133,4 @@ namespace PasswordManager.Classes
 
         }
     }
-
-
-
-
 }
