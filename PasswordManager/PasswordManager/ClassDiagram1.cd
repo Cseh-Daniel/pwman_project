@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="PasswordManager.Classes.Database">
+    <Position X="0.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAEAAAAAACAEAAAgAAAgAABAYCACUFAgAgAAAAA=</HashCode>
+      <FileName>Classes\Database.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PasswordManager.Classes.Encrypter">
+    <Position X="3.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAQIAAAAAAAAACAAAAAAAAQAEAkAAAAAAAAA=</HashCode>
+      <FileName>Classes\Encrypter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PasswordManager.Classes.Generator">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>Classes\Generator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PasswordManager.Classes.GlobalDb">
+    <Position X="6.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\GlobalDb.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PasswordManager.Classes.passwordData">
+    <Position X="8.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAEAAAAEAAAAAAAAAgAAAEA=</HashCode>
+      <FileName>Classes\passwordData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PasswordManager.Pages.Login">
+    <Position X="0.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQYAAAAAAAAAAABAAAAAAAAAAAACAAAACAAAEAA=</HashCode>
+      <FileName>Pages\Login.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PasswordManager.Pages.MainPage">
+    <Position X="2.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AiAABAAAIAGAAABEAAACAAAAAAAAAAAAQAAAAAAhIAA=</HashCode>
+      <FileName>Pages\Main.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PasswordManager.Windows.AddEntry">
+    <Position X="4.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAQIAAAAAAAAAAABIAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Windows\AddEntry.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PasswordManager.Windows.CreateDatabase">
+    <Position X="6.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAQIAAAAAAAAAAABAAAgAAAQQgAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Windows\CreateDatabase.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PasswordManager.Windows.EditEntry">
+    <Position X="8.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABBAQIAAAAAAAAEAABAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Windows\EditEntry.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
